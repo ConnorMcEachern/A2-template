@@ -2,16 +2,16 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 import org.json.JSONObject;
 
-public class Echo implements Action {
+public class Heading implements Action {
     private String direction;
 
-    public Echo(Direction direction) {
+    public Heading(Direction direction) {
         this.direction = direction.toString();
     }
 
     public JSONObject getJSONObject() {
         JSONObject decision = new JSONObject();
-        decision.put("action", "echo");
+        decision.put("action", "heading");
         decision.put("parameters", new JSONObject().put("direction", direction));
         return decision;
     }
