@@ -12,6 +12,8 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private Drone drone;
+    private Action action;
+    private Controller controller;
 
     @Override
     public void initialize(String s) {
@@ -22,12 +24,13 @@ public class Explorer implements IExplorerRaid {
         Integer batteryLevel = info.getInt("budget");
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
+
         drone = new Drone(batteryLevel, Direction.directionFromString(direction));
     }
 
     @Override
     public String takeDecision() {
-        Action action = drone.nextAction();
+        action = controller.nextAction();
         JSONObject decision = action.getJSONObject();
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
@@ -37,12 +40,21 @@ public class Explorer implements IExplorerRaid {
     public void acknowledgeResults(String s) {
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n"+response.toString(2));
+
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
+        drone.reduceBattery(cost);
+
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
+
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        if (action.getClass().equals(Scan.class)) {
+            controller.getInfoFromScan(extraInfo);
+        } else if (action.getClass().equals(Echo.class)) {
+            controller.getInfoFromEcho(extraInfo);
+        }
     }
 
     @Override

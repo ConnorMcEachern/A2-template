@@ -34,14 +34,14 @@ public class Direction {
         return new Direction(3);
     }
 
-    public static Direction directionFromString(String dir) {
-        if (dir.equals("E")) {
+    public static Direction directionFromString(String direction) {
+        if (direction.equals("E")) {
             return Direction.East();
-        } else if (dir.equals("S")) {
+        } else if (direction.equals("S")) {
             return Direction.South();
-        } else if (dir.equals("W")) {
+        } else if (direction.equals("W")) {
             return Direction.West();
-        } else if (dir.equals("N")) {
+        } else if (direction.equals("N")) {
             return Direction.North();
         } else {
             return null;
