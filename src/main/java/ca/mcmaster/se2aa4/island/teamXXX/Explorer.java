@@ -1,10 +1,14 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
 import java.io.StringReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import eu.ace_design.island.bot.IExplorerRaid;
+
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -12,8 +16,10 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     private Drone drone;
+    private Island map;
     private Action action;
-    private Controller controller;
+    private Queue<Phase> phases;
+    private Phase currentPhase;
 
     @Override
     public void initialize(String s) {
@@ -25,13 +31,23 @@ public class Explorer implements IExplorerRaid {
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
 
-        drone = new Drone(batteryLevel, Direction.directionFromString(direction));
+        drone = new Drone(batteryLevel, Direction.directionFromString(direction), new Position(0, 0));
+        currentPhase = new MakeMap(drone, map);
+        phases = new LinkedList<>();
     }
 
     @Override
     public String takeDecision() {
-        action = controller.nextAction();
-        JSONObject decision = action.getJSONObject();
+        JSONObject decision;
+        if (phases.peek().isOver()) {
+            if (phases.isEmpty()) {
+                return new JSONObject().put("action", "stop").toString();
+            }
+            currentPhase = phases.remove();
+        }
+
+        action = phases.peek().nextAction();
+        decision = action.getJSONObject();
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
     }
@@ -51,9 +67,9 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
         if (action.getClass().equals(Scan.class)) {
-            controller.getInfoFromScan(extraInfo);
+            currentPhase.getInfoFromScan(extraInfo);
         } else if (action.getClass().equals(Echo.class)) {
-            controller.getInfoFromEcho(extraInfo);
+            currentPhase.getInfoFromEcho(extraInfo);
         }
     }
 
