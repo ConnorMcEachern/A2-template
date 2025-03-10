@@ -9,6 +9,7 @@ public class Heading implements Action {
         this.direction = direction.toString();
     }
 
+    @Override
     public JSONObject getJSONObject() {
         JSONObject decision = new JSONObject();
         decision.put("action", "heading");

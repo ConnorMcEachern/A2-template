@@ -2,11 +2,11 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 import org.json.JSONObject;
 
-public class Scan implements Action {
+public class Stop implements Action {
     @Override
     public JSONObject getJSONObject() {
         JSONObject decision = new JSONObject();
-        decision.put("action", "scan");
+        decision.put("action", "stop");
         return decision;
     }
 }

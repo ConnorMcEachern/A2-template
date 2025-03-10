@@ -19,7 +19,6 @@ public class Explorer implements IExplorerRaid {
     private Island map;
     private Action action;
     private Queue<Phase> phases;
-    private Phase currentPhase;
 
     @Override
     public void initialize(String s) {
@@ -32,22 +31,31 @@ public class Explorer implements IExplorerRaid {
         logger.info("Battery level is {}", batteryLevel);
 
         drone = new Drone(batteryLevel, Direction.directionFromString(direction), new Position(0, 0));
-        currentPhase = new MakeMap(drone, map);
-        phases = new LinkedList<>();
+        map = new Island();
+    
+        phases = new LinkedList<>();            //ADD Phases here
+        phases.add(new MakeMap(drone, map));    //Must be first phase
+
+        phases.add(new SearchCoast(drone, map));
+        //Grid search
+        //Find inlets
+        //Find emergency cite
+
+        phases.add(new EndPhase());             //Must be the final phase
+
+        phases.peek().initialize();
     }
 
     @Override
     public String takeDecision() {
-        JSONObject decision;
-        if (phases.peek().isOver()) {
-            if (phases.isEmpty()) {
-                return new JSONObject().put("action", "stop").toString();
-            }
-            currentPhase = phases.remove();
+        if (phases.peek().isOver()) {   //progess to next phase
+            phases.remove();
+            logger.info("***Starting next phase: " + phases.peek().getClass());
+            phases.peek().initialize(); //initialize next phase
         }
 
         action = phases.peek().nextAction();
-        decision = action.getJSONObject();
+        JSONObject decision = action.getJSONObject();
         logger.info("** Decision: {}", decision.toString());
         return decision.toString();
     }
@@ -67,9 +75,9 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
         if (action.getClass().equals(Scan.class)) {
-            currentPhase.getInfoFromScan(extraInfo);
+            phases.peek().getInfoFromScan(extraInfo);
         } else if (action.getClass().equals(Echo.class)) {
-            currentPhase.getInfoFromEcho(extraInfo);
+            phases.peek().getInfoFromEcho(extraInfo);
         }
     }
 

@@ -9,6 +9,7 @@ public class Echo implements Action {
         this.direction = direction.toString();
     }
 
+    @Override
     public JSONObject getJSONObject() {
         JSONObject decision = new JSONObject();
         decision.put("action", "echo");
