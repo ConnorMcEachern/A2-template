@@ -10,10 +10,10 @@ public abstract class Phase {
     protected Drone drone;
     protected Island island;
 
-    public abstract Action nextAction();
-    public abstract boolean isOver();
+    public abstract Action nextAction();                    //Define logic behind next action
+    public abstract boolean isOver();                       //Informs the explorer to progress to the next state
 
-    public abstract void getInfoFromScan(JSONObject info);
-    public abstract void getInfoFromEcho(JSONObject info);
+    public abstract void getInfoFromScan(JSONObject info);  //Respond to scans
+    public abstract void getInfoFromEcho(JSONObject info);  //Respond to echos
 
 }
