@@ -11,9 +11,7 @@ public class GridSearch extends Phase {
 
     @Override
     public Action nextAction() {
-        if (drone.position().move(drone.heading()).gety()>island.getHeight()) {
-            return new Stop();
-        }
+        
         if (island.isTileSearched(drone.position())) {
             return new Fly(drone);
         }
@@ -22,7 +20,7 @@ public class GridSearch extends Phase {
 
     @Override
     public boolean isOver() {
-        return false;
+        return drone.position().move(drone.heading()).gety()>=island.getHeight();
     }
 
     @Override

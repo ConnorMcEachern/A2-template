@@ -15,6 +15,7 @@ public class Island {
     }
 
     public boolean isTileSearched(Position pos) {
+        if (tiles == null) return false;
         return tiles[pos.getx()][pos.gety()] != null;
     }
 

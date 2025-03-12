@@ -46,6 +46,7 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String takeDecision() {
+
         if (phases.peek().isOver()) {   //progess to next phase
             phases.remove();
             logger.info("***Starting next phase: " + phases.peek().getClass());
