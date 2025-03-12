@@ -3,10 +3,25 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 import org.json.JSONObject;
 
 public class Echo implements Action {
-    private String direction;
+    private Direction direction;
+    private Drone drone;
+    private Island island;
 
-    public Echo(Direction direction) {
-        this.direction = direction.toString();
+    public Echo(Drone drone, Island island, Direction direction) {
+        this.drone = drone;
+        this.island = island;
+        this.direction = direction;
+    }
+
+    @Override
+    public void doAction(JSONObject response) {
+        drone.reduceBattery(response.getInt("cost"));
+        Position pos = drone.position();
+        JSONObject info = response.getJSONObject("extras");
+        for (int i = 0; i < info.getInt("range"); i++) {
+            island.search(pos);
+            pos.move(direction);
+        }
     }
 
     @Override

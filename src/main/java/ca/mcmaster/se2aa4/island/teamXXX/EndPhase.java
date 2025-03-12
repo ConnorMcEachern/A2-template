@@ -5,8 +5,13 @@ import org.json.JSONObject;
 public class EndPhase extends Phase {
 
     @Override
-    public void initialize() {
-        stop();
+    public Action nextAction() {
+        return new Stop();
+    }
+
+    @Override
+    public boolean isOver() {
+        return false;
     }
 
     @Override
