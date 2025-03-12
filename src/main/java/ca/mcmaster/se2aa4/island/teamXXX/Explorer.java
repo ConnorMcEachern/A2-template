@@ -6,11 +6,11 @@ import java.util.Queue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import eu.ace_design.island.bot.IExplorerRaid;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import eu.ace_design.island.bot.IExplorerRaid;
 
 public class Explorer implements IExplorerRaid {
 
@@ -19,6 +19,8 @@ public class Explorer implements IExplorerRaid {
     private Island island;
     private Action action;
     private Queue<Phase> phases;
+    private Report report = new Report();
+
 
     @Override
     public void initialize(String s) {
@@ -75,6 +77,27 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Battery level is: "+ drone.batteryLevel());
 
         if (action.getClass().equals(Scan.class)) {
+            JSONObject extras = response.getJSONObject("extras");
+            if (extras.has("creeks")) {
+                JSONArray creeks = extras.getJSONArray("creeks");
+                for (int i = 0; i < creeks.length(); i++) {
+                    JSONObject creekObj = creeks.getJSONObject(i);
+                    int x = drone.position().getx();
+                    int y = drone.position().gety();
+                    String id = creekObj.getString("id");
+                    POI creekPOI = new POI(POI.TypeOfPOI.CREEK, new Position(x, y), id);
+                    report.addPOI(creekPOI);
+                }
+            }
+
+            if (extras.has("sites")) {
+                JSONObject emergencyObj = extras.getJSONObject("sites");
+                int x = drone.position().getx();
+                int y = drone.position().gety();
+                String id = emergencyObj.getString("id");
+                POI emergencyPOI = new POI(POI.TypeOfPOI.EMERGENCY_SITE, new Position(x, y), id);
+                report.addPOI(emergencyPOI);
+            }
             phases.peek().getInfoFromScan(response.getJSONObject("extras"));
         } else if (action.getClass().equals(Echo.class)) {
             phases.peek().getInfoFromEcho(response.getJSONObject("extras"));
@@ -83,7 +106,8 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        return "no creek found";
+        String finalReport = report.toString();
+        return finalReport;
     }
 
 }
