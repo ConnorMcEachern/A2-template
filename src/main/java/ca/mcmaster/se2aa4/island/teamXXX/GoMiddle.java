@@ -5,11 +5,11 @@ import java.util.Queue;
 
 import org.json.JSONObject;
 
-public class SearchCoast extends Phase {
+public class GoMiddle extends Phase {
 
     Queue<Action> actions;
 
-    public SearchCoast(Drone drone, Island map) {
+    public GoMiddle(Drone drone, Island map) {
         this.drone = drone;
         this.island = map;
         
@@ -21,7 +21,10 @@ public class SearchCoast extends Phase {
             actions.add(new Fly(drone));
         }
         actions.add(new Right(drone));
-        actions.add(new Echo(drone, island, Direction.South()));
+        for (int i = 0; i < island.getHeight()/2; i++) {
+            actions.add(new Fly(drone));
+        }
+        
     }
 
     @Override
@@ -43,10 +46,6 @@ public class SearchCoast extends Phase {
 
     @Override
     public void getInfoFromEcho(JSONObject info) {
-        for (int i = 0; i <= info.getInt("range"); i++) {
-            actions.add(new Fly(drone));
-        }
-        actions.add(new Scan(drone, island));
     }
     
 }

@@ -6,11 +6,9 @@ import java.util.List;
 public class Report {
     private POI emergencySite;
     private List<POI> creekList;
-    private List<POI> otherPOIs;
 
     public Report() {
         creekList = new ArrayList<>();
-        otherPOIs = new ArrayList<>();
     }
 
     public void addPOI(POI poi) {
@@ -20,8 +18,6 @@ public class Report {
             }
         } else if (poi.getKind() == POI.TypeOfPOI.CREEK) {
             creekList.add(poi);
-        } else {
-            otherPOIs.add(poi);
         }
     }
 
@@ -32,11 +28,6 @@ public class Report {
     public List<POI> getCreeks() {
         return creekList;
     }
-
-    public List<POI> getOtherPOIs() {
-        return otherPOIs;
-    }
-
     
     private double calculateDistance(Position p1, Position p2) {
         int x = p1.getx() - p2.getx();
@@ -82,16 +73,6 @@ public class Report {
             for (POI creek : creekList) {
                 sb.append("ID: ").append(creek.getID())
                   .append(", Location: ").append(creek.getLocation()).append("\n");
-            }
-        }
-        sb.append("Other POIs:\n");
-        if (otherPOIs.isEmpty()) {
-            sb.append("None\n");
-        } else {
-            for (POI poi : otherPOIs) {
-                sb.append("ID: ").append(poi.getID())
-                  .append(", Type: ").append(poi.getKind())
-                  .append(", Location: ").append(poi.getLocation()).append("\n");
             }
         }
         sb.append(getClosestCreekReport());
