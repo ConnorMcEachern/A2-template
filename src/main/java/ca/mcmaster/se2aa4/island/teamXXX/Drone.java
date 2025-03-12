@@ -33,13 +33,13 @@ public class Drone {
 
     public void turnLeft() {
         fly();
-        heading = heading.turnLeft();
+        heading = heading.left();
         fly();
     }
 
     public void turnRight() {
         fly();
-        heading = heading.turnRight();
+        heading = heading.right();
         fly();
     }
 }

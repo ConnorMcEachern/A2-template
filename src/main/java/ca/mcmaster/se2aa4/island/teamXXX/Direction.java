@@ -11,11 +11,11 @@ public class Direction {
         return this.dir == other.dir;
     }
 
-    public Direction turnLeft() {
+    public Direction left() {
         return new Direction((dir + 3)%4);
     }
 
-    public Direction turnRight() {
+    public Direction right() {
         return new Direction((dir + 1)%4);
     }
 

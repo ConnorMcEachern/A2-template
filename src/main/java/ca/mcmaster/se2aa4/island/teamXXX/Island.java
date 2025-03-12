@@ -5,14 +5,18 @@ public class Island {
 
     public void initialize(int xdistance, int ydistance) {
         tiles = new Tile[xdistance][ydistance];
+        System.out.println("test");
+
     }
 
     public void search(Position pos) {
-        tiles[pos.getx()][pos.gety()].search();
+        if (tiles == null) return;
+        tiles[pos.getx()][pos.gety()] = new Tile();
     }
 
     public boolean isTileSearched(Position pos) {
-        return tiles[pos.getx()][pos.gety()].isSearched();
+        if (tiles == null) return false;
+        return tiles[pos.getx()][pos.gety()] != null;
     }
 
     public int getWidth() {

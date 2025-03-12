@@ -1,12 +1,12 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
 public class Position {
-    private int y;
     private int x;
+    private int y;
 
-    public Position (int y, int x) {
-        this.y = y;
+    public Position (int x, int y) {
         this.x = x;
+        this.y = y;
     }
 
     public int getx() {
@@ -18,11 +18,11 @@ public class Position {
     }
 
     public boolean equals(Position other) {
-        return this.y == other.y && this.x == other.x;
+        return this.x == other.x && this.y == other.y;
     }
 
     public Position move(Direction dir) {
-        Position next = new Position(this.y, this.x);
+        Position next = new Position(this.x, this.y);
         if (dir.equals(Direction.East())) {
             next.x += 1;
         } else if (dir.equals(Direction.West())) {
@@ -36,6 +36,6 @@ public class Position {
     }
 
     public String toString() {
-        return "(" + this.y + ", " + this.x + ")";
+        return "(" + this.x + ", " + this.y + ")";
     }
 }
