@@ -1,10 +1,12 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GridSearch extends Phase {
-    private int count = 0;
+    private int count = -1;
     private int target = 1;
+    private boolean echoNext = false;
 
     public GridSearch(Drone drone, Island map) {
         this.drone = drone;
@@ -13,6 +15,10 @@ public class GridSearch extends Phase {
 
     @Override
     public Action nextAction() {
+        if (echoNext) {
+            echoNext = false;
+            return new Echo(drone, island, drone.heading());
+        }
         if (island.isTileSearched(drone.position()) == false) {
             return new Scan(drone, island);  
         }
@@ -34,7 +40,10 @@ public class GridSearch extends Phase {
 
     @Override
     public void getInfoFromScan(JSONObject info) {
-
+        JSONArray biomes = info.getJSONArray("biomes");
+        if (biomes.toString().contains("OCEAN")) {
+            echoNext = true;
+        }
     }
 
     @Override

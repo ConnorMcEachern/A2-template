@@ -18,9 +18,9 @@ public class Echo implements Action {
         drone.reduceBattery(response.getInt("cost"));
         Position pos = drone.position();
         JSONObject info = response.getJSONObject("extras");
-        for (int i = 0; i < info.getInt("range"); i++) {
+        for (int i = 0; i <= info.getInt("range"); i++) {
             island.search(pos);
-            pos.move(direction);
+            pos = pos.move(direction);
         }
     }
 

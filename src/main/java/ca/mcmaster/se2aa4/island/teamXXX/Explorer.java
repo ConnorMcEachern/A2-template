@@ -101,6 +101,7 @@ public class Explorer implements IExplorerRaid {
     public String deliverFinalReport() {
         logger.info(report);
         String finalReport = report.toString();
+
         return finalReport;
     }
 
