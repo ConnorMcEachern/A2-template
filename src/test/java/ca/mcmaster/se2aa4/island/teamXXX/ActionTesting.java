@@ -34,7 +34,7 @@ public class ActionTesting {
         assertTrue(testIsland.isTileSearched(new Position(1, 0)));
         assertTrue(testIsland.isTileSearched(new Position(2, 0)));
         assertFalse(testIsland.isTileSearched(new Position(3, 0)));
-
+        assertEquals(99, testDrone.batteryLevel());
     }
 
     @Test
@@ -43,6 +43,7 @@ public class ActionTesting {
 
         new Scan(testDrone, testIsland).doAction(response);
         assertTrue(testIsland.isTileSearched(new Position(0, 0)));
+        assertEquals(99, testDrone.batteryLevel());
     }
 
     @Test
@@ -51,6 +52,7 @@ public class ActionTesting {
 
         new Fly(testDrone).doAction(response);
         assertTrue(testDrone.position().equals(new Position(1, 0)));
+        assertEquals(99, testDrone.batteryLevel());
     }
 
     @Test
@@ -63,5 +65,6 @@ public class ActionTesting {
         new Left(testDrone).doAction(response);
         assertTrue(testDrone.position().equals(new Position(2, 2)));
         assertTrue(testDrone.heading().equals(Direction.East()));
+        assertEquals(98, testDrone.batteryLevel());
     }
 }
