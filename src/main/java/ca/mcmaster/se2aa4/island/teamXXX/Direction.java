@@ -2,9 +2,27 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 public class Direction {
     private int dir;
-
+    static Direction east = new Direction(0);
+    static Direction south = new Direction(1);
+    static Direction west = new Direction(2);
+    static Direction north = new Direction(3);
+    
     private Direction (int dir) {
         this.dir = dir;
+    }
+
+    private static Direction fromDir(int direction) {
+        if (direction == 0) {
+            return Direction.East();
+        } else if (direction == 1) {
+            return Direction.South();
+        } else if (direction == 2) {
+            return Direction.West();
+        } else if (direction == 3) {
+            return Direction.North();
+        } else {
+            return null;
+        }
     }
 
     public boolean equals(Direction other) {
@@ -12,24 +30,24 @@ public class Direction {
     }
 
     public Direction left() {
-        return new Direction((dir + 3)%4);
+        return fromDir((dir + 3)%4);
     }
 
     public Direction right() {
-        return new Direction((dir + 1)%4);
+        return fromDir((dir + 1)%4);
     }
 
     public static Direction East() {
-        return new Direction(0);
+        return east;
     }
     public static Direction South() {
-        return new Direction(1);
+        return south;
     }
     public static Direction West() {
-        return new Direction(2);
+        return west;
     }
     public static Direction North() {
-        return new Direction(3);
+        return north;
     }
 
     public static Direction directionFromString(String direction) {
@@ -46,6 +64,7 @@ public class Direction {
         }
     }
 
+    @Override
     public String toString() {
         if (dir==0) {
             return "E";
