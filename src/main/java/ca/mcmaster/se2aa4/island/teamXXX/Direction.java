@@ -2,10 +2,10 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 public class Direction {
     private int dir;
-    static Direction east = new Direction(0);
-    static Direction south = new Direction(1);
-    static Direction west = new Direction(2);
-    static Direction north = new Direction(3);
+    private static Direction east = new Direction(0);
+    private static Direction south = new Direction(1);
+    private static Direction west = new Direction(2);
+    private static Direction north = new Direction(3);
     
     private Direction (int dir) {
         this.dir = dir;
