@@ -7,7 +7,6 @@ public class GridSearch2 extends Phase {
     private int count = -1;
     private int target = 1;
     private boolean echoNext = false;
-    private boolean isOver = false;
 
     public GridSearch2(Drone drone, Island map) {
         this.drone = drone;
