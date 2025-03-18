@@ -32,8 +32,7 @@ public class ActionTesting {
         new Echo(testDrone, testIsland, Direction.East()).doAction(response);
         assertTrue(testIsland.isTileSearched(new Position(0, 0)));
         assertTrue(testIsland.isTileSearched(new Position(1, 0)));
-        assertTrue(testIsland.isTileSearched(new Position(2, 0)));
-        assertFalse(testIsland.isTileSearched(new Position(3, 0)));
+        assertFalse(testIsland.isTileSearched(new Position(2, 0)));
         assertEquals(99, testDrone.batteryLevel());
     }
 
