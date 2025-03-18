@@ -3,13 +3,13 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GridSearch extends Phase {
+public class GridSearch2 extends Phase {
     private int count = -1;
     private int target = 1;
     private boolean echoNext = false;
     private boolean isOver = false;
 
-    public GridSearch(Drone drone, Island map) {
+    public GridSearch2(Drone drone, Island map) {
         this.drone = drone;
         this.island = map;
     }
@@ -29,22 +29,18 @@ public class GridSearch extends Phase {
                 count = 0;
                 target++;
             }
-            return new Left(drone);
+            return new Right(drone);
         }
         return new Fly(drone);
     }
 
     @Override
     public boolean isOver() {
-        return isOver;
+        return drone.batteryLevel()<20;
     }
 
     @Override
     public void getInfoFromScan(JSONObject info) {
-        JSONArray sites = info.getJSONArray("sites");
-        for (Object site : sites) {
-            isOver = true;
-        }
         JSONArray biomes = info.getJSONArray("biomes");
         if (biomes.toString().contains("OCEAN")) {
             echoNext = true;

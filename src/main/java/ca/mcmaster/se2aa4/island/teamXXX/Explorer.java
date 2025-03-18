@@ -38,8 +38,9 @@ public class Explorer implements IExplorerRaid {
         phases = new LinkedList<>();            //ADD Phases here
         phases.add(new MakeMap(drone, island));    //Must be first phase
 
-        phases.add(new GoMiddle(drone, island));
-        phases.add(new GridSearch(drone, island));
+        phases.add(new GoMiddle(drone, island));    //Fly to the middle of the map
+        phases.add(new GridSearch(drone, island));  //Grid search turning left
+        phases.add(new GridSearch2(drone, island)); //Once the site is found, grid search turning right
         //Find inlets
         //Find emergency cite
 
