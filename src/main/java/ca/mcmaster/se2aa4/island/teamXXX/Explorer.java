@@ -92,9 +92,9 @@ public class Explorer implements IExplorerRaid {
                 report.addPOI(creekPOI);
             }
 
-            phases.peek().getInfoFromScan(extras);
+            ((ScanInfoReceiver) phases.peek()).getInfoFromScan(extras);
         } else if (action.getClass().equals(Echo.class)) {
-            phases.peek().getInfoFromEcho(extras);
+            ((EchoInfoReceiver) phases.peek()).getInfoFromEcho(extras);
         }
     }
 
