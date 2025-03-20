@@ -13,15 +13,5 @@ public class EndPhase extends Phase {
     public boolean isOver() {
         return false;
     }
-
-    @Override
-    public void getInfoFromScan(JSONObject info) {
-        
-    }
-
-    @Override
-    public void getInfoFromEcho(JSONObject info) {
-        
-    }
     
 }
