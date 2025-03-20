@@ -6,6 +6,3 @@ public interface ScanInfoReceiver {
     void getInfoFromScan(JSONObject info);
 }
 
-public interface EchoInfoReceiver {
-    void getInfoFromEcho(JSONObject info);
-}
