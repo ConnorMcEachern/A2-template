@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GridSearch2 extends Phase {
+public class GridSearch2 extends Phase implements ScanInfoReceiver{
     private int count = -1;
     private int target = 1;
     private boolean echoNext = false;
@@ -44,11 +44,6 @@ public class GridSearch2 extends Phase {
         if (biomes.toString().contains("OCEAN")) {
             echoNext = true;
         }
-    }
-
-    @Override
-    public void getInfoFromEcho(JSONObject info) {
-        
     }
     
 }

@@ -91,10 +91,15 @@ public class Explorer implements IExplorerRaid {
                 POI creekPOI = new POI(POI.TypeOfPOI.EMERGENCY_SITE, drone.position(), id.toString());
                 report.addPOI(creekPOI);
             }
-
-            phases.peek().getInfoFromScan(extras);
+            Phase currentPhase = phases.peek();
+            if(currentPhase instanceof ScanInfoReceiver){
+                ((ScanInfoReceiver) phases.peek()).getInfoFromScan(extras);
+            }
         } else if (action.getClass().equals(Echo.class)) {
-            phases.peek().getInfoFromEcho(extras);
+            Phase currentPhase = phases.peek();
+            if(currentPhase instanceof EchoInfoReceiver){
+                ((EchoInfoReceiver) phases.peek()).getInfoFromEcho(extras);
+            }
         }
     }
 

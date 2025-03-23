@@ -40,12 +40,4 @@ public class GoMiddle extends Phase {
         return actions.isEmpty();
     }
 
-    @Override
-    public void getInfoFromScan(JSONObject info) {
-    }
-
-    @Override
-    public void getInfoFromEcho(JSONObject info) {
-    }
-    
 }

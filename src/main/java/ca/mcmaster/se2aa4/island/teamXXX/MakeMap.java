@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.island.teamXXX;
 
 import org.json.JSONObject;
 
-public class MakeMap extends Phase {
+public class MakeMap extends Phase implements EchoInfoReceiver{
     private Integer xsize;
     private boolean isOver = false;
 
@@ -22,10 +22,6 @@ public class MakeMap extends Phase {
     @Override
     public boolean isOver() {
         return isOver;
-    }
-
-    @Override
-    public void getInfoFromScan(JSONObject info) {
     }
 
     @Override
