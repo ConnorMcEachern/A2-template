@@ -35,6 +35,11 @@ public class GridSearch2 extends Phase implements ScanInfoReceiver{
 
     @Override
     public boolean isOver() {
+        try {
+            island.isTileSearched(drone.position().move(drone.heading()));
+        } catch (Exception e) {
+            return true;
+        }
         return drone.batteryLevel()<20;
     }
 
