@@ -1,7 +1,7 @@
 package ca.mcmaster.se2aa4.island.teamXXX;
 
 import org.json.JSONObject;
-//final
+//final 1
 public class MakeMap extends Phase implements EchoInfoReceiver{
     private Integer xsize;
     private boolean isOver = false;
